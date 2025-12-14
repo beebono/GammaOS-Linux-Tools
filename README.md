@@ -43,7 +43,7 @@ sudo apt install libusb-1.0-0 adb fastboot
     1. (Optional) Rename the `spd_dump.exe` file in that folder to something like `spd_dump_windows.exe` to avoid confusion.
 4. Open a terminal in the `UnlockBootloader` folder and run `t820-unlock.sh`.
     1. While holding the **Back** button on your device, plug the device into your computer.
-    2. Your device will reboot after the unlock, and may reboot to recovery with a scary warning. Don't panic and just perform the Factory Reset as instructed.
+    2. Your device will reboot after the unlock, and will likely power on to recovery with a scary warning. Don't panic and just perform the Factory Reset as instructed.
 
 ### Section 3: Enable USB Debugging
 1. Once you are back in the Stock OS, enable **Developer Options**:

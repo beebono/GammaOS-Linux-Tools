@@ -2,3 +2,7 @@ put-pac-in-here/*.pac
 put-pac-in-here/*.img*
 put-pac-in-here/*.xml
 put-pac-in-here/*.bin
+vbmeta.bin
+pgpt.bin
+misc.bin
+*.xml
