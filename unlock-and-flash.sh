@@ -4,6 +4,8 @@ cd put-pac-in-here
 
 if [[ -f "super.img" ]]; then
     superfile="super.img"
+elif [[ -f "super_full.img" ]]; then
+    superfile="super_full.img"
 elif [[ -f "super_lite.img" ]]; then
     superfile="super_lite.img"
 else
@@ -69,19 +71,17 @@ sudo ./spd_dump --wait 600 \
     w dtbo_a ./put-pac-in-here/$dtboafile \
     w dtbo_b ./put-pac-in-here/$dtbobfile \
     w super ./put-pac-in-here/$superfile \
-    w vbmeta_a ./stock-blobs/vbmeta.bin \
-    w vbmeta_b ./stock-blobs/vbmeta.bin \
-    w vbmeta_system_a ./stock-blobs/vbmeta_system.bin \
-    w vbmeta_system_b ./stock-blobs/vbmeta_system.bin \
-    w vbmeta_vendor_a ./stock-blobs/vbmeta_vendor.bin \
-    w vbmeta_venodr_b ./stock-blobs/vbmeta_vendor.bin \
-    w vbmeta_system_ext_a ./stock-blobs/vbmeta_system_ext.bin \
-    w vbmeta_system_ext_b ./stock-blobs/vbmeta_system_ext.bin \
-    w vbmeta_product_a ./stock-blobs/vbmeta_product.bin \
-    w vbmeta_product_b ./stock-blobs/vbmeta_product.bin \
-    w vbmeta_odm_a ./stock-blobs/vbmeta_odm.bin \
-    w vbmeta_odm_b ./stock-blobs/vbmeta_odm.bin \
-    e misc \
-    e metadata \
+    w vbmeta_a ./stock-blobs/vbmeta_a.img \
+    w vbmeta_b ./stock-blobs/vbmeta_b.img \
+    w vbmeta_system_a ./stock-blobs/vbmeta_system_a.img \
+    w vbmeta_system_b ./stock-blobs/vbmeta_system_b.img \
+    w vbmeta_vendor_a ./stock-blobs/vbmeta_vendor_a.img \
+    w vbmeta_vendor_b ./stock-blobs/vbmeta_vendor_b.img \
+    w vbmeta_system_ext_a ./stock-blobs/vbmeta_system_ext_a.img \
+    w vbmeta_system_ext_b ./stock-blobs/vbmeta_system_ext_b.img \
+    w vbmeta_product_a ./stock-blobs/vbmeta_product_a.img \
+    w vbmeta_product_b ./stock-blobs/vbmeta_product_b.img \
+    w vbmeta_odm_a ./stock-blobs/vbmeta_odm_a.img \
+    w vbmeta_odm_b ./stock-blobs/vbmeta_odm_b.img \
     reset
 
