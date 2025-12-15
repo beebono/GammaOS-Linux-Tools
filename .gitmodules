@@ -1,6 +1,0 @@
-[submodule "external/spreadtrum_flash"]
-	path = external/spreadtrum_flash
-	url = https://github.com/TomKing062/spreadtrum_flash.git
-[submodule "external/pacextractor"]
-	path = external/pacextractor
-	url = https://github.com/divinebird/pacextractor.git
