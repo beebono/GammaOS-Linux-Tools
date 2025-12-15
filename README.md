@@ -4,7 +4,7 @@
 ## Flashing Requirements
 
 - libusb
-- python3
+- python3 (3.7+)
 - A fully downloaded and decompressed GammaOSNext .pac file
 
 **Debian/Ubuntu**
@@ -24,10 +24,11 @@ sudo apt install libusb-1.0-0 python3
     1. Follow the instructions printed in your terminal from this point.
     2. Your device should reboot into GammaOSNext when done.
 
-
 ---
 
 ## Thanks to:
 
-- TheGammaSqueeze for GammaOS
-- Bismoy Ghosh for Spreadtrum PAC extractor, extractor.py
+- TheGammaSqueeze for GammaOS, [GammaOSNext](https://github.com/TheGammaSqueeze/GammaOSNext)
+- Bismoy Ghosh for Spreadtrum PAC extractor, [extractor.py](https://github.com/bismoy-bot/PAC-Extractor)
+- Ilya Kurdyukov for Spreadtrum firmware dumper/flasher, [spd_dump](https://github.com/ilyakurdyukov/spreadtrum_flash)
+- TomKing062 for Spreadtrum bootloader unlock blobs, [CVE-Repository](https://github.com/TomKing062/CVE-2022-38694_unlock_bootloader)
