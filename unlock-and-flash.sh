@@ -71,17 +71,18 @@ sudo ./spd_dump --wait 600 \
     w dtbo_a ./put-pac-in-here/$dtboafile \
     w dtbo_b ./put-pac-in-here/$dtbobfile \
     w super ./put-pac-in-here/$superfile \
-    w vbmeta_a ./stock-blobs/vbmeta_a.img \
-    w vbmeta_b ./stock-blobs/vbmeta_b.img \
-    w vbmeta_system_a ./stock-blobs/vbmeta_system_a.img \
-    w vbmeta_system_b ./stock-blobs/vbmeta_system_b.img \
-    w vbmeta_vendor_a ./stock-blobs/vbmeta_vendor_a.img \
-    w vbmeta_vendor_b ./stock-blobs/vbmeta_vendor_b.img \
-    w vbmeta_system_ext_a ./stock-blobs/vbmeta_system_ext_a.img \
-    w vbmeta_system_ext_b ./stock-blobs/vbmeta_system_ext_b.img \
-    w vbmeta_product_a ./stock-blobs/vbmeta_product_a.img \
-    w vbmeta_product_b ./stock-blobs/vbmeta_product_b.img \
-    w vbmeta_odm_a ./stock-blobs/vbmeta_odm_a.img \
-    w vbmeta_odm_b ./stock-blobs/vbmeta_odm_b.img \
+    w vbmeta_a ./put-pac-in-here/vbmeta_a.img \
+    w vbmeta_b ./put-pac-in-here/vbmeta_b.img \
+    w vbmeta_system_a ./put-pac-in-here/vbmeta_system_a.img \
+    w vbmeta_system_b ./put-pac-in-here/vbmeta_system_b.img \
+    w vbmeta_vendor_a ./put-pac-in-here/vbmeta_vendor_a.img \
+    w vbmeta_vendor_b ./put-pac-in-here/vbmeta_vendor_b.img \
+    w vbmeta_system_ext_a ./put-pac-in-here/vbmeta_system_ext_a.img \
+    w vbmeta_system_ext_b ./put-pac-in-here/vbmeta_system_ext_b.img \
+    w vbmeta_product_a ./put-pac-in-here/vbmeta_product_a.img \
+    w vbmeta_product_b ./put-pac-in-here/vbmeta_product_b.img \
+    w vbmeta_odm_a ./put-pac-in-here/vbmeta_odm_a.img \
+    w vbmeta_odm_b ./put-pac-in-here/vbmeta_odm_b.img \
+    e metadata \
     reset
 
