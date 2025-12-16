@@ -1,5 +1,17 @@
 #!/bin/bash
 
+get_longest() {
+    local longest=""
+    local max_len=0
+    for file in "$@"; do
+        if [[ ${#file} -gt $max_len ]]; then
+            longest="$file"
+            max_len=${#file}
+        fi
+    done
+    echo "$longest"
+}
+
 pacs=( *.pac )
 if (( ${#pacs[@]} == 0 )); then
   echo "No .pac file found in: $(pwd)" >&2
@@ -26,15 +38,20 @@ else
     exit 1
 fi
 
-if [[ -f "uboot_b.img(1)" ]]; then
-    ubootafile="uboot_b.img(1)"
-    ubootbfile="uboot_b.img(1)" 
-elif [[ ! -f "uboot_a.img" ]]; then
-    ubootafile="uboot_b.img"
-    ubootbfile="uboot_b.img"
+ubootafiles=( uboot_a.img* )
+ubootbfiles=( uboot_b.img* )
+if [[ ${#ubootafiles[@]} -gt 0 && ${#ubootbfiles[@]} -gt 0 ]]; then
+    ubootafile=$(get_longest "${ubootafiles[@]}")
+    ubootbfile=$(get_longest "${ubootbfiles[@]}")
+elif [[ ${#ubootafiles[@]} -gt 0 ]]; then
+    ubootafile=$(get_longest "${ubootafiles[@]}")
+    ubootbfile="$ubootafile"
+elif [[ ${#ubootbfiles[@]} -gt 0 ]]; then
+    ubootbfile=$(get_longest "${ubootbfiles[@]}")
+    ubootafile="$ubootbfile"
 else
-    ubootafile="uboot_a.img"
-    ubootbfile="uboot_b.img"
+    echo "Missing or unexpected uboot parititions! Cannot continue!"
+    exit 1
 fi
 
 if [[ -f "boot.img.signed" ]]; then
