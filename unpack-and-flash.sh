@@ -45,10 +45,10 @@ if [[ ${#ubootafiles[@]} -gt 0 && ${#ubootbfiles[@]} -gt 0 ]]; then
     ubootbfile=$(get_longest "${ubootbfiles[@]}")
 elif [[ ${#ubootafiles[@]} -gt 0 ]]; then
     ubootafile=$(get_longest "${ubootafiles[@]}")
-    ubootbfile="$ubootafile"
+    ubootbfile=$(get_longest "${ubootafiles[@]}")
 elif [[ ${#ubootbfiles[@]} -gt 0 ]]; then
     ubootbfile=$(get_longest "${ubootbfiles[@]}")
-    ubootafile="$ubootbfile"
+    ubootafile=$(get_longest "${ubootbfiles[@]}")
 else
     echo "Missing or unexpected uboot parititions! Cannot continue!"
     exit 1
