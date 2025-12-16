@@ -56,7 +56,11 @@ fi
 
 if [[ -f "boot.img.signed" ]]; then
     bootafile="boot.img.signed"
-    bootbfile="boot.img.signed(1)"
+    if [[ -f "boot.img.signed(1)" ]]; then
+        bootbfile="boot.img.signed(1)"
+    else
+        bootbfile=$bootafile
+    fi
 else
     bootafile="boot_a.img"
     bootbfile="boot_b.img"
@@ -64,7 +68,11 @@ fi
 
 if [[ -f "vendor_boot.img.signed" ]]; then
     vendbootafile="vendor_boot.img.signed"
-    vendbootbfile="vendor_boot.img.signed(1)"
+    if [[ -f "vendor_boot.img.signed(1)" ]]; then
+        vendbootbfile="vendor_boot.img.signed(1)"
+    else
+        vendbootbfile=$vendbootafile
+    fi
 else
     vendbootafile="vendor_boot_a.img"
     vendbootbfile="vendor_boot_b.img"
@@ -72,7 +80,11 @@ fi
 
 if [[ -f "dtbo.img.signed" ]]; then
     dtboafile="dtbo.img.signed"
-    dtbobfile="dtbo.img.signed(1)"
+    if [[ -f "dtbo.img.signed(1)" ]]; then
+        dtbobfile="dtbo.img.signed(1)"
+    else
+        dtbobfile=$dtboafile
+    fi
 else
     dtboafile="dtbo_a.img"
     dtbobfile="dtbo_b.img"
