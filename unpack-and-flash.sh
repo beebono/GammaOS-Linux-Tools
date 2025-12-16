@@ -29,6 +29,9 @@ fi
 if [[ -f "uboot_b.img(1)" ]]; then
     ubootafile="uboot_b.img(1)"
     ubootbfile="uboot_b.img(1)" 
+elif [[ ! -f "uboot_a.img" ]]; then
+    ubootafile="uboot_b.img"
+    ubootbfile="uboot_b.img"
 else
     ubootafile="uboot_a.img"
     ubootbfile="uboot_b.img"
