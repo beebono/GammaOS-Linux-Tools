@@ -40,15 +40,15 @@ fi
 
 ubootafiles=( uboot_a.img* )
 ubootbfiles=( uboot_b.img* )
-if [[ ${#ubootafiles[@]} -gt 0 && ${#ubootbfiles[@]} -gt 0 ]]; then
+if [[ $ubootafiles != "uboot_a.img*" && $ubootbfiles != "uboot_b.img*" ]]; then
     ubootafile=$(get_longest "${ubootafiles[@]}")
     ubootbfile=$(get_longest "${ubootbfiles[@]}")
-elif [[ ${#ubootafiles[@]} -gt 0 ]]; then
+elif [[ $ubootafiles != "uboot_a.img*" ]]; then
     ubootafile=$(get_longest "${ubootafiles[@]}")
-    ubootbfile=$(get_longest "${ubootafiles[@]}")
-elif [[ ${#ubootbfiles[@]} -gt 0 ]]; then
-    ubootbfile=$(get_longest "${ubootbfiles[@]}")
+    ubootbfile=$ubootafile
+elif [[ $ubootbfiles != "uboot_b.img*" ]]; then
     ubootafile=$(get_longest "${ubootbfiles[@]}")
+    ubootbfile=$ubootafile
 else
     echo "Missing or unexpected uboot parititions! Cannot continue!"
     exit 1
