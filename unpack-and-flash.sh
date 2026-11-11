@@ -12,6 +12,8 @@ get_longest() {
     echo "$longest"
 }
 
+shopt -s nullglob
+
 pacs=( *.pac )
 if (( ${#pacs[@]} == 0 )); then
   echo "No .pac file found in: $(pwd)" >&2
@@ -21,7 +23,7 @@ fi
 fwfile="$(ls -t -- "${pacs[@]}" | head -n 1)"
 echo "Using PAC: $fwfile"
 
-rm -r extracted
+rm -rf extracted
 mkdir -p extracted
 cd extracted
 
@@ -40,13 +42,13 @@ fi
 
 ubootafiles=( uboot_a.img* )
 ubootbfiles=( uboot_b.img* )
-if [[ $ubootafiles != "uboot_a.img*" && $ubootbfiles != "uboot_b.img*" ]]; then
+if (( ${#ubootafiles[@]} > 0 && ${#ubootbfiles[@]} > 0 )); then
     ubootafile=$(get_longest "${ubootafiles[@]}")
     ubootbfile=$(get_longest "${ubootbfiles[@]}")
-elif [[ $ubootafiles != "uboot_a.img*" ]]; then
+elif (( ${#ubootafiles[@]} > 0 )); then
     ubootafile=$(get_longest "${ubootafiles[@]}")
     ubootbfile=$ubootafile
-elif [[ $ubootbfiles != "uboot_b.img*" ]]; then
+elif (( ${#ubootbfiles[@]} > 0 )); then
     ubootafile=$(get_longest "${ubootbfiles[@]}")
     ubootbfile=$ubootafile
 else
@@ -90,11 +92,29 @@ else
     dtbobfile="dtbo_b.img"
 fi
 
-read -n 1 -r -s -p $'\nYou are about to be asked for your sudo password to prevent libusb permission issues.\nIf you are uncomfortable with that, close your terminal and do not proceed.\nOtherwise, get ready to plug your device into your computer while holding the BACK button on it.\nPress any key when you are ready...\n'
+read -n 1 -r -s -p $'\nOn Linux you may be asked for your sudo password to prevent libusb permission issues.\nIf you are uncomfortable with that, close your terminal and do not proceed.\nGet ready to plug your device into your computer while holding the BACK button on it.\nPress any key when you are ready...\n'
 
 cd ../tools
 
-sudo ./spd_dump --wait 600 \
+case "$(uname -s)" in
+    Darwin)
+        spd=./spd_dump-darwin
+        # Gatekeeper blocks quarantined binaries (e.g. when this repo was downloaded as a zip)
+        xattr -d com.apple.quarantine "$spd" 2>/dev/null
+        # The boot ROM is a vendor-specific device (class 0xff), so macOS binds no
+        # driver and a normal user can claim it -- no sudo needed. Worse, on Apple
+        # Silicon the "allow accessory" authorization belongs to the console user,
+        # not root, so running under sudo can stop the process seeing the device.
+        sudo=""
+        ;;
+    *)
+        spd=./spd_dump
+        # Linux binds cdc_acm to the device; root is needed to detach and claim it.
+        sudo="sudo"
+        ;;
+esac
+
+$sudo "$spd" --wait 600 \
     exec_addr 0x65012f48 \
     fdl ../unisoc-blobs/fdl1-boot.bin 0x65000800 \
     fdl ../unisoc-blobs/fdl2-cboot.bin 0xb4fffe00 \
@@ -103,9 +123,12 @@ sudo ./spd_dump --wait 600 \
     fdl ../unisoc-blobs/sml_a.bin 0xbcfffe00 \
     exec
 
+# Note: the unlock exec resets the device, so spd_dump exits non-zero here
+# even on success. Don't gate on it -- the charging screen is the real signal.
+
 read -n 1 -r -s -p $'\nBootloader unlocked! Wait for your device to get to the charging screen.\nThen, please unplug your device and get ready to replug it while holding the BACK button again.\nPress any key when you are ready...\n'
 
-sudo ./spd_dump --wait 600 \
+$sudo "$spd" --wait 600 \
     fdl ../extracted/fdl1-dl.bin 0x65000800 \
     fdl ../extracted/fdl2-dl.bin 0xb4fffe00 \
     exec \
@@ -137,3 +160,8 @@ sudo ./spd_dump --wait 600 \
     firstmode 0 \
     reset
 
+# spd_dump exits non-zero after 'reset' reboots the device, so a clean run and
+# a failure look the same from here. Watch the handheld: it should reboot into
+# GammaOSNext. If it doesn't, re-run this script.
+echo
+echo "Flash sequence sent. Your device should now reboot into GammaOSNext."
